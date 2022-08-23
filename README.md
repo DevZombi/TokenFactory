@@ -1,3 +1,7 @@
+# TokenFactory
+
+This project was created in an effort to briong an open source solution to mint new crypto currency inside the MintMe blockchain. This project utilises PolymerJS/LitElements/for the front end, it connects to the blockchain utilising MetaMask/Web3, and it uses OpenZeppelin libraries in the solidity contracts. The cotnracts themselves even tho included in the source code, were developed and deployed in Remix.
+
 # Polymer App Toolbox - Starter Kit
 
 [![Build Status](https://travis-ci.org/Polymer/polymer-starter-kit.svg?branch=master)](https://travis-ci.org/Polymer/polymer-starter-kit)
