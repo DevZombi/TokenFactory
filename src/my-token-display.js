@@ -49,7 +49,7 @@ class MyTokenDisplay extends PolymerElement {
 		</template>
 
 		<template is="dom-if" if="{{!isItNormal(db._type)}}">
-			<my-token-mintable-contract web3="{{web3}}" address="{{address}}" name="{{tname}}" symbol="{{tsymbol}}" supply="{{tsupply}}" tokencontract="{{tokencontract}}"></my-token-mintable-contract>
+			<my-token-mintable-contract web3="{{web3}}" address="{{address}}" name="{{tname}}" symbol="{{tsymbol}}" supply="{{tsupply}}" tokencontract="{{tokencontract}}" refresh="{{refresh}}"></my-token-mintable-contract>
 			<div class="card layout small" style="margin-top: -15px;">
 				<p style="width: 20%; text-align: center;">Name: {{tname}}</p>
 				<p style="width: 20%; text-align: center;">Symbol: {{tsymbol}}</p>
@@ -106,6 +106,15 @@ class MyTokenDisplay extends PolymerElement {
 			token_mint: {
 				type: Number,
 				value: 0
+			},
+			notification: {
+				type: String,
+				notify: true
+			},
+			refresh: {
+				type: Boolean,
+				value: false,
+				notify: true
 			}
 		};
 	}
@@ -133,12 +142,12 @@ class MyTokenDisplay extends PolymerElement {
 
 	burn() {
 		this.token_burn = this.token_burn.replace(/\,/g, '');
-		this.tokencontract.methods.burn(this.web3.utils.toWei(this.token_burn,'ether')).send({from: this.metamask.selectedAddress});
+		this.tokencontract.methods.burn(this.web3.utils.toWei(this.token_burn,'ether')).send({from: this.metamask.selectedAddress}).then(() => { this.notification = "Burn Complete"; this.token_burn = "0"; this.$.manager.close(); this.refresh = true;});
 	}
 
 	mint() {
 		this.token_mint = this.token_mint.replace(/\,/g, '');
-		this.tokencontract.methods.mint(this.token_sent_to, this.web3.utils.toWei(this.token_mint,'ether')).send({from: this.metamask.selectedAddress});
+		this.tokencontract.methods.mint(this.token_sent_to, this.web3.utils.toWei(this.token_mint,'ether')).send({from: this.metamask.selectedAddress}).then(() => { this.notification = "Mint " + this.token_mint + " " + this.tsymbol + " and sent to wallet " + this.token_sent_to; this.token_mint = "0"; this.token_sent_to = ""; this.$.manager.close(); this.refresh = true;});;
 	}
 }
  

@@ -28,6 +28,11 @@ class MyTokenMintableContract extends PolymerElement {
 			supply: {
 				type: String,
 				notify: true
+			},
+			refresh: {
+				type: Boolean,
+				value: false,
+				observer: '_refresh'
 			}
 		};
     }
@@ -444,6 +449,11 @@ class MyTokenMintableContract extends PolymerElement {
 	_temp_supplyChanged(ssupply) {
 		this.supply = this.web3.utils.fromWei(ssupply, 'ether');
 		this.supply = Number(this.supply).toLocaleString();
+	}
+
+	async _refresh() {
+		this.temp_supply = await this.tokencontract.methods.totalSupply().call();
+		this.refresh = false;
 	}
 }
 

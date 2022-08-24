@@ -85,7 +85,7 @@ class MyERC20Factory extends PolymerElement {
 			<div class="layout vertical flex" style="margin-top: 40px;">
 				<template is="dom-repeat" items="{{tokenDB.tokens}}">
 					<template is="dom-if" if="{{doIOwnToken(item)}}">
-						<my-token-display web3="{{web3}}" metamask="{{metamask}}" address="{{item}}" myindex="{{getIndex(item)}}" db="{{tokenDB}}" style="margin: 0px;"></my-token-display>
+						<my-token-display web3="{{web3}}" metamask="{{metamask}}" address="{{item}}" myindex="{{getIndex(item)}}" db="{{tokenDB}}" style="margin: 0px;" notification="{{notification}}"></my-token-display>
 					</template>
 				</template>
 			</div>
